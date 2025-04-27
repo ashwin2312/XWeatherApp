@@ -1,0 +1,16 @@
+.weather-card{
+    height: 100px;
+    width: 200px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* border: 1px solid green; */
+
+    background-color: white;
+    border-radius: 5px;
+
+    filter: drop-shadow(0 0 0.5rem rgb(54, 54, 54));
+}

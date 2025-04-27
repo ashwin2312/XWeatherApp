@@ -1,0 +1,40 @@
+#root {
+  /* max-width: 1280px; */
+  /* margin: 0 auto; */
+  padding: 2rem;
+  /* text-align: center; */
+  /* max-height: 500px; */
+  background-color: rgb(228, 247, 255);
+}
+
+.searchbar-section{
+  /* max-width: 1000px; */
+  display: flex;
+  /* border: 1px solid red; */
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: auto;
+}
+
+.weather-cards{
+  margin: 10rem;
+  /* border: 1px solid grey; */
+
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+p{
+  /* border: 1px solid red; */
+  text-align: center;
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
