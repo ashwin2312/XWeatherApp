@@ -1,7 +1,7 @@
 import React from "react";
 import "./Searchbar.css";
 
-export default function SearchBar({ city, setCity }) {
+export default function SearchBar({ city, setCity, debouncedValue, setDebouncedValue }) {
   return (
     <div>
       <input

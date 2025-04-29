@@ -1,54 +1,99 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./App.css";
 import Button from "./components/Button";
 import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
-import { useState } from "react";
 
 export default function App() {
   const [city, setCity] = useState("");
+  const [debouncedValue, setDebouncedValue] = useState("");
   const [weatherData, setWeatherData] = useState({});
+  const [displayWeatherData, setDisplayWeatherData] = useState({});
   const [displayData, setDisplayData] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [cityName, setCityName] = useState("");
 
-  let API = `http://api.weatherapi.com/v1/current.json?key=a67979409d354878a62161041253101&q=${city}&aqi=yes`;
+  let API = `http://api.weatherapi.com/v1/current.json?key=a67979409d354878a62161041253101&q=${debouncedValue}&aqi=yes`;
 
   const getCityData = async () => {
+    console.log("getcitydata function entry");
     try {
-      setIsLoading(true);
+      console.log("try");
       const response = await fetch(API);
-      const data = await response.json();
-      setWeatherData(data.current);
-      setCityName(data.location.name);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error while fetching data::", error);
-      if (!cityName) {
+      console.log("response::", response);
+      if (!response.ok) {
         alert("Failed to fetch weather data");
         setIsLoading(true);
         displayData(false);
       }
+      const data = await response.json();
+      console.log("data::", data);
+      setWeatherData(data.current);
+    } catch (error) {
+      console.log("catch");
+      console.error("Error while fetching data::", error);
+      alert("Failed to fetch weather data");
+      setIsLoading(true);
+      displayData(false);
     }
+    //-------------------------------------------------------------------------
+
+    // axios
+    //   .get("http://api.weatherapi.com/v1/current.json", {
+    //     params: {
+    //       key: "a67979409d354878a62161041253101",
+    //       q: city,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     setWeatherData(response.data.current);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching data::", error);
+    //     alert("Failed to fetch weather data.");
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
   };
 
-  console.log("cityname::", cityName);
-
-  const { temp_c, humidity, wind_kph } = weatherData;
+  const { temp_c, humidity, wind_kph } = displayWeatherData;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    getCityData();
     setDisplayData(true);
+    setDisplayWeatherData(weatherData);
   };
 
-  // useEffect(() => {}, []);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(city);
+    }, 800);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [city]);
+
+  useEffect(() => {
+    if (debouncedValue) {
+      setIsLoading(true);
+      getCityData();
+      setIsLoading(false);
+      console.log("get city data::", getCityData());
+    }
+  }, [debouncedValue]);
 
   return (
     <div>
       <div className="searchbar-section">
         <form className="searchbar-section" action="" onSubmit={handleSubmit}>
-          <SearchBar city={city} setCity={setCity} />
+          <SearchBar
+            city={city}
+            setCity={setCity}
+            debouncedValue={debouncedValue}
+            setDebouncedValue={setDebouncedValue}
+          />
           <Button />
         </form>
       </div>
@@ -58,7 +103,7 @@ export default function App() {
           {[
             { title: "Temperature", value: `${temp_c}℃` },
             { title: "Humidity", value: `${humidity}%` },
-            { title: "Condition", value: weatherData.condition?.text },
+            { title: "Condition", value: displayWeatherData.condition?.text },
             { title: "Wind Speed", value: `${wind_kph} kph` },
           ].map((card, index) => (
             <WeatherCard key={index} title={card.title} value={card.value} />
