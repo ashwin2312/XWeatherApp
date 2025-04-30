@@ -32,9 +32,9 @@ export default function App() {
     } catch (error) {
       console.log("catch");
       console.error("Error while fetching data::", error);
-      alert("Failed to fetch weather data");
-      setIsLoading(true);
-      displayData(false);
+      // alert("Failed to fetch weather data");
+      // setIsLoading(true);
+      // displayData(false);
     }
     //-------------------------------------------------------------------------
 
@@ -59,8 +59,8 @@ export default function App() {
 
   const { temp_c, humidity, wind_kph } = displayWeatherData;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleClick = () => {
+    // e.preventDefault();
     setDisplayData(true);
     setDisplayWeatherData(weatherData);
   };
@@ -68,7 +68,7 @@ export default function App() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(city);
-    }, 800);
+    }, 1000);
 
     return () => {
       clearTimeout(handler);
@@ -81,21 +81,24 @@ export default function App() {
       getCityData();
       setIsLoading(false);
       console.log("get city data::", getCityData());
+    } else {
+      setIsLoading(false);
+      setDisplayData(false);
     }
   }, [debouncedValue]);
 
   return (
     <div>
       <div className="searchbar-section">
-        <form className="searchbar-section" action="" onSubmit={handleSubmit}>
+        <div className="searchbar-section">
           <SearchBar
             city={city}
             setCity={setCity}
             debouncedValue={debouncedValue}
             setDebouncedValue={setDebouncedValue}
           />
-          <Button />
-        </form>
+          <Button handleClick={handleClick} />
+        </div>
       </div>
       {isLoading && <p>Loading...</p>}
       {displayData && !isLoading ? (
