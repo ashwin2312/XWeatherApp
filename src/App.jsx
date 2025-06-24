@@ -22,9 +22,9 @@ export default function App() {
       const response = await fetch(API);
       console.log("response::", response);
       if (!response.ok) {
-        alert("Failed to fetch weather data");
         setIsLoading(true);
         displayData(false);
+        alert("Failed to fetch weather data");
       }
       const data = await response.json();
       console.log("data::", data);
