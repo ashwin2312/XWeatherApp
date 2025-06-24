@@ -13,7 +13,7 @@ export default function App() {
   const [displayData, setDisplayData] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  let API = `http://api.weatherapi.com/v1/current.json?key=a67979409d354878a62161041253101&q=${debouncedValue}&aqi=yes`;
+  let API = `https://api.weatherapi.com/v1/current.json?key=a67979409d354878a62161041253101&q=${debouncedValue}&aqi=yes`;
 
   const getCityData = async () => {
     console.log("getcitydata function entry");
