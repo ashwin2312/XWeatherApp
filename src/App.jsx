@@ -22,9 +22,9 @@ export default function App() {
       const response = await fetch(API);
       console.log("response::", response);
       if (!response.ok) {
+        alert("Failed to fetch weather data");
         setIsLoading(true);
         displayData(false);
-        alert("Failed to fetch weather data");
       }
       const data = await response.json();
       console.log("data::", data);
@@ -36,25 +36,7 @@ export default function App() {
       // setIsLoading(true);
       // displayData(false);
     }
-    //-------------------------------------------------------------------------
-
-    // axios
-    //   .get("http://api.weatherapi.com/v1/current.json", {
-    //     params: {
-    //       key: "a67979409d354878a62161041253101",
-    //       q: city,
-    //     },
-    //   })
-    //   .then((response) => {
-    //     setWeatherData(response.data.current);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching data::", error);
-    //     alert("Failed to fetch weather data.");
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
+   
   };
 
   const { temp_c, humidity, wind_kph } = displayWeatherData;
@@ -100,7 +82,7 @@ export default function App() {
           <Button handleClick={handleClick} />
         </div>
       </div>
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <p>Loading data...</p>}
       {displayData && !isLoading ? (
         <div className="weather-cards">
           {[
