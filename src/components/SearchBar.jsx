@@ -1,12 +1,12 @@
 import React from "react";
 import "./Searchbar.css";
 
-export default function SearchBar({ city, setCity}) {
+export default function SearchBar({ city, setCity }) {
   return (
     <div>
       <input
         className="searchBar-container"
-        type="input"
+        type="text"
         name=""
         id=""
         placeholder="Enter city name"
