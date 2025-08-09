@@ -23,7 +23,7 @@ export default function App() {
         `https://api.weatherapi.com/v1/current.json?key=a67979409d354878a62161041253101&q=${city}&aqi=yes`
       );
       if (!response.ok) {
-        alert("City not found or invalid input");
+        alert("Failed to fetch weather data");
         setDisplayData(false);
         setIsLoading(false);
         return;
